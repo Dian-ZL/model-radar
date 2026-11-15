@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="跟踪大语言模型的发布、技术变化与硬件需求。">
+  <title>模型技术跟踪</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="model-profiles.js"></script>
+  <script defer src="releases.js"></script>
+  <script defer src="technique-guides.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="mark" aria-hidden="true">▦</span>模型技术跟踪</div>
+    <nav aria-label="模型类别">
+      <a href="#overview" aria-current="page">LLM</a>
+      <span>多模态理解</span><span>图像与视频</span><span>语音</span><span>世界模型</span>
+    </nav>
+  </header>
+  <main id="overview">
+    <section class="intro">
+      <h1>LLM 技术总览</h1>
+      <p>追踪模型发布、架构变化与硬件需求。</p>
+    </section>
+    <form id="filters" aria-label="筛选模型">
+      <label class="search">关键词<input id="query" type="search" placeholder="搜索模型或算法"></label>
+      <label>公司<select id="company"><option value="">全部公司</option></select></label>
+      <fieldset>
+        <legend>发布时间</legend>
+        <input id="from" type="date" aria-label="起始日期">
+        <span aria-hidden="true">至</span>
+        <input id="to" type="date" aria-label="结束日期">
+      </fieldset>
+      <button type="reset" class="reset">重置</button>
+    </form>
+    <div class="results">
+      <div class="table-head"><h2>模型发布</h2><span id="count" aria-live="polite"></span></div>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="模型发布表">
+        <table>
+          <colgroup span="6"></colgroup>
+          <colgroup span="2"></colgroup>
+          <colgroup span="2"></colgroup>
+          <colgroup span="3"></colgroup>
+          <thead>
+            <tr>
+              <th scope="col" rowspan="2">公司 / 模型版本</th>
+              <th scope="col" rowspan="2">发布时间 ↓</th>
+              <th scope="col" rowspan="2">总参数 / 激活参数</th>
+              <th scope="col" rowspan="2">最大上下文</th>
+              <th scope="col" rowspan="2">获取方式</th>
+              <th scope="col" rowspan="2">技术变化</th>
+              <th scope="colgroup" colspan="2" class="group-start">模型架构</th>
+              <th scope="colgroup" colspan="2" class="group-start">推理阶段优化</th>
+              <th scope="col" rowspan="2" class="group-start">数据格式</th>
+              <th scope="col" rowspan="2">可能的硬件瓶颈</th>
+              <th scope="col" rowspan="2">验证指标</th>
+            </tr>
+            <tr>
+              <th scope="col" class="group-start">Attention</th>
+              <th scope="col">MLP / FFN</th>
+              <th scope="col" class="group-start">Prefill</th>
+              <th scope="col">Decode</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <noscript>请启用 JavaScript 来查看模型和使用筛选。</noscript>
+    </div>
+    <details class="sources">
+      <summary>跟踪范围与官方来源</summary>
+      <ul id="sources"></ul>
+    </details>
+  </main>
+  <dialog id="tech" aria-labelledby="tech-title">
+    <div class="drawer">
+      <header class="drawer-head">
+        <div><p id="tech-model"></p><h2 id="tech-title"></h2></div>
+        <form method="dialog"><button aria-label="关闭技术解读" class="close">×</button></form>
+      </header>
+      <div id="tech-body"></div>
+    </div>
+  </dialog>
+  <dialog id="model-detail" aria-labelledby="model-title">
+    <div class="drawer">
+      <header class="drawer-head">
+        <div><p id="model-company"></p><h2 id="model-title"></h2></div>
+        <form method="dialog"><button aria-label="关闭模型详情" class="close">×</button></form>
+      </header>
+      <div id="model-body"></div>
+    </div>
+  </dialog>
+  <dialog id="format-detail" aria-labelledby="format-title">
+    <div class="drawer">
+      <header class="drawer-head">
+        <div><p id="format-model"></p><h2 id="format-title"></h2></div>
+        <form method="dialog"><button aria-label="关闭数据格式详情" class="close">×</button></form>
+      </header>
+      <section>
+        <h3>用途与适用范围</h3>
+        <p id="format-usage"></p>
+      </section>
+      <section>
+        <h3>原始来源</h3>
+        <a id="format-source" target="_blank" rel="noopener noreferrer">查看技术报告或部署文档 ↗</a>
+      </section>
+    </div>
+  </dialog>
+</body>
+</html>
